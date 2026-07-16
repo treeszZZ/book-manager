@@ -1,7 +1,7 @@
 # 书单森林 · 阅读管理助手
 
 > 一个沉浸式的个人书单管理工具，帮助你整理阅读足迹，记录读书感想。
-**在线体验**：https://book-manager.netlify.app
+**在线体验**：https://inspiring-mochi-c0da92.netlify.app
 
 ---
 
@@ -13,7 +13,7 @@
 - **双视图切换** —— 网格/列表两种展示模式，自由切换
 - **完整 CRUD** —— 添加、编辑、删除书籍，记录评分和感想
 - **数据统计** —— 总本数、已读本数、分类数量一目了然
--  *UI设计** —— 春日森林风格，毛玻璃质感，低对比护眼设计
+-  **UI设计** —— 春日森林风格，毛玻璃质感，低对比护眼设计
 
 ---
 
@@ -46,7 +46,7 @@ book-manager/
 │   │   └── parser.js            # 书单文字解析器
 │   ├── db.js                    # Dexie 数据库操作
 │   ├── App.jsx                  # 主应用（含侧边栏布局）
-│   ├── app.css                  # 全局样式（春日森林主题）
+│   ├── app.css                  # 全局样式
 │   └── main.jsx                 # 入口文件
 ├── public/
 ├── index.html
@@ -61,6 +61,7 @@ book-manager/
 
 ## 克隆项目
 git clone https://github.com/treeszZZ/book-manager.git
+
 cd book-manager
 
 ## 安装依赖
