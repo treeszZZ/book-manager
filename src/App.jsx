@@ -18,6 +18,7 @@ export default function App() {
   const [editingBook, setEditingBook] = useState(null);
   const [parseResults, setParseResults] = useState([]);
   const [viewMode, setViewMode] = useState('grid');
+  const [activeTab, setActiveTab] = useState('books');
 
   useEffect(() => {
     loadBooks();
@@ -81,7 +82,7 @@ export default function App() {
             : 'text-[#778c7c] hover:text-[#33593b]'
         }`}
       >
-        📐 网格
+        网格
       </button>
       <button
         onClick={() => setViewMode('list')}
@@ -91,15 +92,29 @@ export default function App() {
             : 'text-[#778c7c] hover:text-[#33593b]'
         }`}
       >
-        📋 列表
+        列表
       </button>
     </div>
   );
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+    if (tab === 'import') {
+      setShowImportModal(true);
+      setActiveTab('books');
+    } else if (tab === 'category') {
+      setShowCategoryModal(true);
+      setActiveTab('books');
+    } else {
+      setSelectedCategory('');
+      setActiveTab('books');
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-bg-milk text-text-primary">
-      {/* ====== 左侧固定侧边栏 ====== */}
-      <aside className="w-[220px] flex-shrink-0 h-screen sticky top-0 bg-white/70 backdrop-blur-md border-r border-[#b8ddc2]/30 p-6 flex flex-col">
+      {/* ====== 左侧侧边栏（桌面端显示） ====== */}
+      <aside className="hidden md:flex w-[220px] flex-shrink-0 h-screen sticky top-0 bg-white/70 backdrop-blur-md border-r border-[#b8ddc2]/30 p-6 flex-col">
         <div className="mb-8">
           <h1 className="text-xl font-normal tracking-wide flex items-center gap-2 text-text-primary">
             <span className="text-2xl">🌿</span> 书单森林
@@ -130,7 +145,6 @@ export default function App() {
           >
             📂 管理分类
           </button>
-          {/* 可扩展更多菜单 */}
         </nav>
 
         <div className="mt-auto pt-4 border-t border-[#b8ddc2]/30 text-xs text-text-secondary flex items-center gap-1">
@@ -139,11 +153,11 @@ export default function App() {
       </aside>
 
       {/* ====== 右侧主内容 ====== */}
-      <main className="flex-1 overflow-y-auto p-6 md:p-8">
-        {/* 通栏大图 Banner（仿照设计，可以放装饰文字） */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#d8efdd] to-[#b8ddc2] p-6 mb-8 shadow-soft">
+      <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 pb-24 md:pb-8">
+        {/* 通栏大图 Banner */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#d8efdd] to-[#b8ddc2] p-6 mb-6 shadow-soft">
           <div className="relative z-10">
-            <h2 className="text-2xl font-light text-text-primary tracking-wide">
+            <h2 className="text-xl md:text-2xl font-light text-text-primary tracking-wide">
               📖 今日阅读
             </h2>
             <p className="text-text-secondary text-sm mt-1">
@@ -154,16 +168,16 @@ export default function App() {
         </div>
 
         {/* 统计卡片 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
           <StatCard label="总本数" value={stats.totalCount} icon="📚" />
           <StatCard label="已读本数" value={stats.readCount} icon="✅" />
           <StatCard label="分类数量" value={stats.categoryCount} icon="🏷️" />
         </div>
 
         {/* 搜索 + 筛选 + 视图切换 */}
-        <div className="flex flex-wrap items-center gap-4 mb-6">
+        <div className="flex flex-wrap items-center gap-3 mb-6">
           <ViewToggle />
-          <div className="flex-1 min-w-[200px]">
+          <div className="flex-1 min-w-[160px]">
             <input
               type="text"
               placeholder="搜索书名或作者..."
@@ -187,7 +201,7 @@ export default function App() {
         {/* 书籍列表 */}
         {filteredBooks.length > 0 ? (
           <div className={viewMode === 'grid' 
-            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'
+            ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'
             : 'flex flex-col gap-3'
           }>
             {filteredBooks.map(book => (
@@ -210,7 +224,31 @@ export default function App() {
         )}
       </main>
 
-      {/* 模态框 */}
+      {/* ====== 移动端底部导航（手机上显示，桌面端隐藏） ====== */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-[#b8ddc2]/30 flex justify-around items-center py-3 px-4 z-50">
+        <button
+          onClick={() => handleTabClick('books')}
+          className={`flex flex-col items-center text-sm transition ${
+            activeTab === 'books' ? 'text-[#33593b] font-medium' : 'text-text-secondary'
+          }`}
+        >
+          全部
+        </button>
+        <button
+          onClick={() => handleTabClick('import')}
+          className="flex flex-col items-center text-sm text-text-secondary transition hover:text-[#33593b]"
+        >
+          导入
+        </button>
+        <button
+          onClick={() => handleTabClick('category')}
+          className="flex flex-col items-center text-sm text-text-secondary transition hover:text-[#33593b]"
+        >
+          分类
+        </button>
+      </div>
+
+      {/* ====== 模态框 ====== */}
       {showImportModal && (
         <ImportModal
           onClose={() => setShowImportModal(false)}
