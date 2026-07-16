@@ -17,7 +17,7 @@
 
 ---
 
-## 🛠️ 技术栈
+## 技术栈
 
 | 技术 | 用途 |
 | :--- | :--- |
@@ -30,7 +30,7 @@
 
 ---
 
-## 🗂️ 项目结构
+## 项目结构
 
 ```
 book-manager/
@@ -57,19 +57,19 @@ book-manager/
 ```
 ---
 
-## 本地运行步骤
+# 本地运行步骤
 
-# 克隆项目
+## 克隆项目
 git clone https://github.com/treeszZZ/book-manager.git
 cd book-manager
 
-# 安装依赖
+## 安装依赖
 npm install
 
-# 启动开发服务器
+## 启动开发服务器
 npm run dev
 
-# 打开浏览器访问 http://localhost:5173
+## 打开浏览器访问 http://localhost:5173
 
 
 ---
@@ -87,5 +87,4 @@ npm run dev
 - [ ] PWA 支持（离线可用）
 
 ---
-第一次vibecoding。感谢阅读。
-                             来自treeszZZ
+第一次vibecoding。感谢阅读。————来自treeszZZ
